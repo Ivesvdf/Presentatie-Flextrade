@@ -74,23 +74,63 @@ Nathan Samson}
 % ----------------------------------------------------------------------------
 % *** END of Titlepage >>>
 % ----------------------------------------------------------------------------
-%
+\definecolor{bg}{RGB}{58,94,133}%
 
 %\frame{\partpage}
 \section*{Architecture}
 \begin{frame}
 	\frametitle{Bank Architecture}
-	 \begin{itemize}
-	  \item What virtualization is
-	  \item How it works
-	  \item How it affects security
-	  \hfill\\
-	  \item \ldots on 2 different levels:
-	  \begin{itemize}
-	    \item Operating system-level
-	    \item Application-level
-	  \end{itemize}
-	 \end{itemize}
+	\begin{center}
+	\begin{tikzpicture}
+		%Arrows interbank
+		\draw[<->] (1.4, -2.5) -- (6,0.5);
+		\draw[<->] (3, -2.5) -- (6,0.5);
+
+		\draw[<->] (3, 0.5) -- (6, -2.5);
+		\draw[<->] (3, 0.5) -- (6+1.6, -2.5);
+		%Bank 1
+		\draw[very thick,fill=uablue] (0,0) rectangle (3,1);
+		\node[thick] at (3/2,1/2){Bank};
+
+		% JS 1
+		\draw[fill=bg] (0,-1.5) rectangle +(3,1);
+		\node[] at (3/2,-1.5+1/2){Javaspace};
+		\draw[<->] (3/2, 0) -- (3/2, -1.5+1);
+
+		%workers
+		\draw (0,-3) rectangle +(1.4, 1);
+		\node[font=\tiny,text width=1.4, align=center] at (0.2, -2.5) { Transaction\-Worker };
+		\draw[fill=bg] (1.6,-3) rectangle +(1.4, 1);
+		\node[font=\tiny,text width=1.4, align=center] at (0.2+1.6, -2.5) {
+		Preparing\-Transaction\-Worker };
+
+		\draw[<->] (1.4/2, -1.5) -- +(0, -0.5);
+		\draw[<->] (1.6+1.4/2, -1.5) -- +(0, -0.5);
+
+
+		%Bank 2
+		\draw[very thick,fill=uablue] (6,0) rectangle +(3,1);
+		\node[thick] at (6+3/2,1/2){Bank};
+		
+		% JS 2
+		\draw[fill=bg] (6,-1.5) rectangle +(3,1);
+		\node[] at (6+3/2,-1.5+1/2){Javaspace};
+		\draw[<->] (6+3/2, 0) -- ++(0, -1.5+1);
+
+		%
+		%workers
+		\draw[fill=bg] (6+0,-3) rectangle +(1.4, 1);
+		\node[font=\tiny,text width=1.4, align=center] at (6+0.2, -2.5) { Transaction\-Worker };
+		\draw (6+1.6,-3) rectangle +(1.4, 1);
+		\node[font=\tiny,text width=1.4, align=center] at (6+0.2+1.6, -2.5) {
+		Preparing\-Transaction\-Worker };
+
+		\draw[<->] (6+1.4/2, -1.5) -- +(0, -0.5);
+		\draw[<->] (6+1.6+1.4/2, -1.5) -- +(0, -0.5);
+
+
+	\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \begin{frame}
