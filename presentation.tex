@@ -1,0 +1,402 @@
+\documentclass[pdflatex,compress,usenames, dvipsnames]{beamer}
+
+%\usetheme[darktitle,framenumber,totalframenumber]{UniversiteitAntwerpen}
+\usetheme[dark,framenumber,totalframenumber,notes=hide]{UniversiteitAntwerpen}
+% \setbeamertemplate{background}[grid][step=1cm]
+% \beamertemplategridbackground{1}
+
+\usepackage{pgfpages}
+
+\usepackage{lipsum}
+\usepackage{colortbl}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{textpos}
+\usepackage[english]{babel}
+
+% the official UA font:
+\IfFileExists{Auto1.sty}{
+    \usepackage[lf]{Auto1}
+}
+
+\usepackage{mathptmx}
+
+\title{Flextrade}
+
+\author{Ives~van~der~Flaas \\
+Nathan Samson}
+
+%\renewcommand{\emph}{\textbf}
+% The following corrects spacing! There was too much space under the title and
+% this fixes it. 
+\let\OldFrameTitle\frametitle
+\renewcommand{\frametitle}[1]{\OldFrameTitle{#1} \vspace{-1cm}}
+
+% Use instead of \alert which looks like shit outside of blocks\ldots
+\newcommand{\coloremph}[1]{{\color{lime} #1}}
+\newcommand\startsection[1]{\section{#1} \frame{\begin{center}\Huge #1
+\end{center}}}
+
+\setbeamerfont{section in toc}{size=\Large}
+\setbeamercolor{subsection in toc}{fg=green!90!black, bg=blue}
+\setbeamercolor{section in toc}{fg=uablue!30!white, bg=blue}
+\setbeamercolor{section in toc shaded}{fg=uablue!80!white,bg=blue}
+\setbeamercolor{subsection in toc shaded}{fg=uablue!80!white,bg=blue}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{section in toc shaded}[default][90]
+\setbeamertemplate{subsection in toc shaded}[default][90]
+
+\newcommand\tocpage{
+\begin{frame}
+	\frametitle{Table of Contents}
+	\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded]
+\end{frame}
+}
+
+\newcommand{\imgslide}[1]{{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{#1}}
+	\begin{frame}[plain]
+	\end{frame}}
+}
+
+\begin{document}
+
+% ----------------------------------------------------------------------------
+% *** Titlepage <<<
+% ----------------------------------------------------------------------------
+\maketitle
+% ----------------------------------------------------------------------------
+% *** END of Titlepage >>>
+% ----------------------------------------------------------------------------
+%
+
+%\frame{\partpage}
+\section*{Architecture}
+\begin{frame}
+	\frametitle{Bank Architecture}
+	 \begin{itemize}
+	  \item What virtualization is
+	  \item How it works
+	  \item How it affects security
+	  \hfill\\
+	  \item \ldots on 2 different levels:
+	  \begin{itemize}
+	    \item Operating system-level
+	    \item Application-level
+	  \end{itemize}
+	 \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Responsibilities}
+	\begin{center}
+		% AANVULLEN!
+		\begin{tabular}{ll}
+			\toprule
+			Ives & Nathan \\
+			\midrule
+			JavaSpace worker & \ldots \\
+	 		GUI & \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{frame}
+
+\end{document}
+\startsection{Virtualization}
+\begin{frame}
+	\frametitle{What is virtualization?}
+\begin{block}{Definition: Wikipedia}
+The creation of a virtual (rather than actual) version of something, such as a
+hardware platform, operating system, \ldots
+\end{block}
+	\begin{itemize}
+	  \item May provide better security without hampering performance
+	  \item Provides isolation between instances/platforms
+	\end{itemize}
+\end{frame}
+\subsection{OS-level}
+\begin{frame}
+	\frametitle{Virtual machines}
+	\begin{itemize}
+	  \item Virtual Machine Monitor provides virtualization of hardware
+	  \item Virtual Machines execute on this virtual system
+	  \item Each VM is an operating system instance with own environment
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Virtual machines}
+	\begin{itemize}
+	  \item Early breakthrough: \emph{Full system virtualization}
+	  \begin{itemize}
+	    \item Exact copy of machine hardware
+	    \item VMWare, VirtualBox, \ldots
+	  \end{itemize}
+	  \item Recent development: \emph{Paravirtualization}
+	  \begin{itemize}
+	    \item Non-exact abstraction of hardware
+	    \item Denali, Xen, \ldots
+	  \end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Example: relocation}
+	\begin{figure}
+	  \centering
+	  %	  \includegraphics[width=\paperwidth/2]{q3.png}
+	\end{figure}
+\end{frame}
+\begin{frame}
+	\frametitle{Example: relocation}
+	\begin{itemize}
+	  \item Take a running VM, hosting a multiplayer match
+	  \item Copy it to another server
+	  \item Copy the memory step by step
+	  \item Shut down and resume on the new server
+	  \item ... how much downtime would occur?
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Example: relocation}
+	\begin{itemize}
+	  \item Just 50ms of downtime
+	  \item None of the players noticed
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Virtual machines}
+	\begin{itemize}
+	  \item Early breakthrough: \emph{Full system virtualization}
+	  \begin{itemize}
+	    \item Exact copy of machine hardware
+	    \item VMWare, VirtualBox, \ldots
+	  \end{itemize}
+	  \item Recent development: \emph{Paravirtualization}
+	  \begin{itemize}
+	    \item Non-exact abstraction of hardware
+	    \item Denali, Xen, \ldots
+	  \end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Full system virtualization}
+	\begin{itemize}
+	  \item Advantages:
+	  \begin{itemize}
+	    \item Operating systems can run unmodified
+	    \item Programs will behave the same on virtual machines
+	  \end{itemize}
+	  \item Disadvantages:
+	  \begin{itemize}
+	    \item Most architectures are not made for virtualization ...
+	    \item Which means the VMM needs to emulate certain instructions ...
+	    \item Leading to decreased performance
+	  \end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Paravirtualization}
+	\begin{itemize}
+	  \item The idea: collaboration between (adapted) OS and VMM
+	  \item Provides an abstraction of the platform, not a copy
+	  \item Less overhead, better resource allocation
+	\end{itemize}
+\end{frame}
+\subsection{Application-level}
+\startsection{Security Impact}
+\subsection{OS-level}
+\subsection{Application-level}
+
+\begin{frame}
+	\centering
+	\Huge Questions? 
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXAMPLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{How?}
+By using a (discrete) \emph{Fourier Transform}!
+\begin{enumerate}
+	\item Use Fourier Transform to convert from the spacial domain to the frequency domain
+	\item Apply filter in the frequency domain
+	\item Use Inverse Fourier Transform to convert back to the spacial domain
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Jean Baptiste Joseph Fourier}
+	\note[item]{Legt Fourier analyse terloops uit in La Th\'eorie Analitique
+	de la Chaleur, 1822 analoog aan Newton die Calculus uitvond omdat hij het
+	nodig had.}
+	\begin{block}{Contribution: Fourier Analysis}
+		Every periodic function can be represented as a sum of sines or
+		cosines (some restrictions apply). 
+	\end{block}
+
+	\begin{block}{Contribution: Fourier Transform}
+		When functions aren't periodic, but have a finite area under
+		their curve, they can still be represented as an \alert{integral} of sines
+		or cosines, multiplied by some function. 
+	\end{block}
+\end{frame}
+
+
+
+% subfloat example
+\begin{frame}
+	\frametitle{Example: Spectrum}
+	\begin{figure}
+		\centering
+		\subfloat[Original Image]{\includegraphics[width=0.3\textwidth]{blockspacial}}
+		\quad
+		\subfloat[Fourier Spectrum]{\includegraphics[width=0.3\textwidth]{blockfrequency}}
+	\end{figure}
+	{\tiny Image Source:
+	http://www.cs.utah.edu/$\sim{}$seyung/index\_files/projects/cs7966/project3/index.html}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ----------------------------------------------------------------------------
+% *** Test frame <<<
+% ----------------------------------------------------------------------------
+\begin{frame}
+\frametitle{A first test frame}
+\lipsum[1]
+\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame >>>
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% *** Test frame with overflow <<<
+% ----------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Test frame with overflow}
+\lipsum
+\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame >>>
+% ----------------------------------------------------------------------------
+
+
+% ----------------------------------------------------------------------------
+% *** Test frame with overflow <<<
+% ----------------------------------------------------------------------------
+%\begin{frame}
+%\frametitle{The is a test frame with a pretty long frame title}
+%\lipsum
+%\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame >>>
+% ----------------------------------------------------------------------------
+
+\subsection{My subsection 2}
+% ----------------------------------------------------------------------------
+% *** Test frame with Itemize <<<
+% ----------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Test frame with itemize}
+
+\begin{itemize}
+    \item<1-> firstly
+    \item<2-> secondly
+        \begin{itemize}
+            \item sub-item
+            \item another sub-item
+        \end{itemize}
+      \item<3-> thirdly
+\end{itemize}
+
+\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame with Itemize >>>
+% ----------------------------------------------------------------------------
+
+
+% ----------------------------------------------------------------------------
+% *** Test frame with Math <<<
+% ----------------------------------------------------------------------------
+\begin{frame}
+\frametitle{A math frame}
+
+\begin{theorem}[Pythagoras]
+The square of the hypotenuse of a \alert{right} triangle is equal to the sum of the squares on the other two sides:
+\[
+a^2 + b^2 = c^2.
+\]
+\end{theorem}
+\begin{proof}
+Straightforward.
+\end{proof}
+
+\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame with Math >>>
+% ----------------------------------------------------------------------------
+
+
+% ----------------------------------------------------------------------------
+% *** Test frame with Environments <<<
+% ----------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Environments}
+
+\begin{definition}
+A \emph{prime number} (or a prime) is a natural number which has exactly two distinct natural number divisors: 1 and itself. 
+\end{definition}
+
+\begin{exampleblock}{Example}
+The first five prime numbers are $2$, $3$, $5$, $7$, and $11$.
+\end{exampleblock}
+
+\begin{alertblock}{Alert block}
+Note that $1$ is not a prime number.
+\end{alertblock}
+
+\end{frame}
+% ----------------------------------------------------------------------------
+% *** END of Test frame with Environments >>>
+% ----------------------------------------------------------------------------
+
+
