@@ -134,6 +134,43 @@ Nathan Samson}
 \end{frame}
 
 \begin{frame}
+	\frametitle{Auction Architecture}
+	\begin{center}
+	\begin{tikzpicture}[scale=0.8]
+		\draw[very thick,fill=uablue] (-1.5, 0) rectangle +(3, 1); 
+		\node at (0,0.5){Auction };
+
+		\draw (-1.5, -1.5) rectangle +(3,1);
+		\node at (0, -1) { JavaSpace };
+		\draw[<->] (0, 0) -- +(0,-0.5);
+
+		\draw (-3.2, -3.5) rectangle +(3,1);
+		\node[font=\footnotesize,text width=1,align=center] at (-3.0, -3) { Auctioneer\-Manager };
+		\draw (0.2, -3.5) rectangle +(3,1);
+		\node[font=\footnotesize,text width=1,align=center] at (0.4, -3) { Auctioneer\-Manager };
+		\draw[<->] (0,-1.5) -- +(-1.5, -1);
+		\draw[<->] (0,-1.5) -- +(+1.5, -1);
+
+		\draw (-3.2,-5) rectangle +(3,1);
+		\node[font=\footnotesize] at (-1.7,-5+0.5) { ShippingService };
+
+		\draw (0.2,-5) rectangle +(3,1);
+		\node[font=\footnotesize] at (+1.7,-5+0.5) { Bank };
+
+		\draw[->] (-1.7, -3.5) -- +(0, -0.5);
+		\draw[->] (-1.7, -3.5) -- +(3.2, -0.5);
+		\draw[->] (+1.7, -3.5) -- +(0, -0.5);
+		\draw[->] (+1.7, -3.5) -- +(-3.2, -0.5);
+
+		\draw (-5, 0) rectangle +(3,1);
+		\node[font=\footnotesize] at (-3.5, 0.5) { Webservice };
+		\draw[->] (-2, 0.5) -- (-1.5, 0.5);
+
+	\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+\begin{frame}
 	\frametitle{Responsibilities}
 	\begin{center}
 		% AANVULLEN!
